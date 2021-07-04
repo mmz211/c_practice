@@ -70,7 +70,7 @@ class Queue {
 
 
 
-int main() {
+int test_queue() {
 
     string op;
 

@@ -13,11 +13,6 @@
 int heap_arr[HEAP_MAX_NODE];
 int cnt;
 
-int swap() {
-
-}
-
-
 int get_arr_length() {
 
     return cnt;
@@ -153,10 +148,10 @@ int print_arr() {
 
 int print_menu() {
 
-    printf("");
+    printf("MENU\r\n");
 }
 
-int main() {
+int test_heap() {
 
     int op;
     int val;

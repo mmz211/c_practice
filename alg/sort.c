@@ -3,20 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "main.h"
+
 #define MIN_NUM 10
-
-
-void print_array(int * array, int size) {
-
-
-    for (int i = 0; i < size; i++) {
-
-        printf("%d, ", array[i]);
-    }
-
-    printf("\r\n");
-}
-
 
 void swap(int * x, int * y) {
 
@@ -47,7 +36,7 @@ void merge_sort(int * array, int l, int r) {
 
     merge_sort(array, l, m);
     merge_sort(array, m+1, r);
-    
+
     int * external_space = malloc(sizeof(int) * (r-l+1));
     if (external_space == NULL) {
         return;
@@ -66,7 +55,7 @@ void merge_sort(int * array, int l, int r) {
             external_space[idx++] = array[lp++];
             continue;
         }
-        
+
         if (array[lp] < array[rp]) {
 
             external_space[idx++] = array[lp++]; 
@@ -292,23 +281,33 @@ void selection_sort(int * array, int l, int r) {
 }
 
 
-int main() {
+int array[MIN_NUM] = {3, 4, 8, 5, 9, 6, 2, 1, 7, 199};
+//int array[MIN_NUM] = {3, 4, 8, 3, 9, 6, 2, 1, 7, 5};
 
-    int array[MIN_NUM] = {3, 4, 8, 5, 9, 6, 2, 1, 7, 199};
-    //int array[MIN_NUM] = {3, 4, 8, 3, 9, 6, 2, 1, 7, 5};
+/*
+   selection_sort(array, 0, 9);
+   insert_sort(array, 0, 9);
+   bubble_sort(array, 0, 9);
+   quick_sort(array, 0, 9);
+   shell_sort(array, 10);
+   */
+int test_merge_sort() {
 
     print_array(array, MIN_NUM);
-    /*
-       selection_sort(array, 0, 9);
-       insert_sort(array, 0, 9);
-       bubble_sort(array, 0, 9);
-       quick_sort(array, 0, 9);
-        heap_sort(array, 10);
-        shell_sort(array, 10);
-       */
 
     merge_sort(array, 0, 9);
 
     print_array(array, MIN_NUM);
 }
+
+int test_heap_sort() {
+
+    print_array(array, MIN_NUM);
+
+    heap_sort(array, 10);
+
+    print_array(array, MIN_NUM);
+}
+
+
 

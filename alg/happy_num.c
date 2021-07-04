@@ -48,7 +48,7 @@ int is_happy_num(int n) {
 }
 
 
-int main() {
+int test_happy_num() {
 
     clock_t start, end;
     int counter = 0;
@@ -75,7 +75,7 @@ int main() {
     printf("counter is %d\r\n", counter);
     printf("sum is %d\r\n", sum);
 
-    printf("time is %d\r\n", end - start);
+    printf("time is %ld\r\n", end - start);
 
     return 0;
 }

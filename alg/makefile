@@ -1,5 +1,5 @@
 
-cc = g++
+cc = gcc
 prom = test 
 deps = $(shell find ./ -name "*.h")
 src = $(shell find ./ -name "*.c" )

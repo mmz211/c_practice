@@ -1,16 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 
 
 //#define DESCENDING
-
-//#define DEBUG_LOG
-
-#ifdef DEBUG_LOG
-    #define PR(format, ...) printf(format, ##__VA_ARGS__)
-#else
-    #define PR(format, ...) 
-#endif
 
 #define DATA_NUM 10
 
@@ -53,10 +46,10 @@ void print_list(My_Node * list) {
 
 
 My_Node * insert_in_order(My_Node * list, int value) {
-    
+
     My_Node * curr = list;
     My_Node * prev = curr;
-    
+
     My_Node * new_node = (My_Node *)malloc(sizeof(My_Node));
     new_node->data = value;
     new_node->next = NULL;
@@ -68,86 +61,86 @@ My_Node * insert_in_order(My_Node * list, int value) {
     }
 
     /*
-    while (curr) {
-    
-        if (curr->data > value) {
-        
-            break;
-        }
-        curr = curr->next;
-        prev = curr;
-    }
+       while (curr) {
 
-    do {
-        
-        if (curr->data > value) {
-        
-            break;
-        }
-        curr = curr->next;
-        prev = curr;
+       if (curr->data > value) {
 
-    } while (curr->next);
-    
+       break;
+       }
+       curr = curr->next;
+       prev = curr;
+       }
 
-    do {
-       
-        curr = curr->next;
-        
-        if (curr) {
+       do {
 
-            prev = curr;
-        }
-        
-        if (value > curr->data) {
-            
-        } else {
+       if (curr->data > value) {
 
-            break;
-        }
+       break;
+       }
+       curr = curr->next;
+       prev = curr;
 
-    } while (curr);
+       } while (curr->next);
 
-    */
+
+       do {
+
+       curr = curr->next;
+
+       if (curr) {
+
+       prev = curr;
+       }
+
+       if (value > curr->data) {
+
+       } else {
+
+       break;
+       }
+
+       } while (curr);
+
+*/
 
     /*
      * works for larger -> smaller order
      *
-    for (prev = curr; value < curr->data; curr = curr->next) {
+     for (prev = curr; value < curr->data; curr = curr->next) {
 
-        if (curr) {
+     if (curr) {
 
-            prev = curr;
-        } else {
-            
-            break;
-        }
-        
-    }
-    
-    if (curr == NULL) {
-        
-        // insert at tail
-        new_node->next = curr;
-        prev->next = new_node;
+     prev = curr;
+     } else {
 
-        return list;
-    }
+     break;
+     }
 
-    if (curr == list) {
+     }
 
-        // insert at head
-        new_node->next = list;
-        list = new_node;
+     if (curr == NULL) {
+
+// insert at tail
+new_node->next = curr;
+prev->next = new_node;
+
+return list;
+}
+
+if (curr == list) {
+
+    // insert at head
+    new_node->next = list;
+    list = new_node;
     } else {
 
-        new_node->next = curr;
-        prev->next = new_node;
+    new_node->next = curr;
+    prev->next = new_node;
     }
     */
 
 #ifdef DESCENDING
-    while (curr && value < curr->data) {
+while (curr && value < curr->data) {
 #else
     while (curr && value > curr->data) {
 #endif
@@ -155,9 +148,9 @@ My_Node * insert_in_order(My_Node * list, int value) {
         prev = curr;
         curr = curr->next;
     }
-    
+
     if (curr == NULL) {
-        
+
         // insert at tail
         new_node->next = curr;
         prev->next = new_node;
@@ -228,7 +221,7 @@ My_Node * init_list_with_array(int arr[], int size) {
         node->next = NULL;
 
         if (!curr) {
-        
+
             curr = node;
             head = curr;
         } else {
@@ -250,7 +243,7 @@ My_Node * init_list_with_array(int arr[], int size) {
         node->next = NULL;
 
         if (!curr) {
-        
+
             curr = node;
             head = curr;
         } else {
@@ -322,7 +315,7 @@ int test_case2() {
     print_array(init_array_2, DATA_NUM);
 
     My_Node * head;
-    
+
 #ifdef INSERT_AT_TAIL
     head = init_list_with_array(init_array_2, DATA_NUM);
 #else
@@ -381,27 +374,27 @@ int test_case1() {
     return 0;
 }
 
-int main () {
+int test_sigle_link_list() {
 
     int ret = 0;
-    
+
     ret = test_case1();
 
     printf("========\r\n");
     ret = test_case2();
     /*
-    for (int i=0; i<2; i++) {
-        ret = test_case##i();
-        if (ret) {
-        
-            printf("Test case" #i "passed!\r\n");
-        } else {
-            
-            printf("Test case" #i "failed!\r\n");
-        }
-        
-    }
-    */
+       for (int i=0; i<2; i++) {
+       ret = test_case##i();
+       if (ret) {
+
+       printf("Test case" #i "passed!\r\n");
+       } else {
+
+       printf("Test case" #i "failed!\r\n");
+       }
+
+       }
+       */
 
 
     return 0;
