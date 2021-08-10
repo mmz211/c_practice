@@ -1,11 +1,16 @@
 
+#include "sort.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+void print_array(int * array, int size) {
 
-#include "main.h"
 
-#define MIN_NUM 10
+    for (int i = 0; i < size; i++) {
+
+        printf("%d\t", array[i]);
+    }
+
+    printf("\r\n");
+}
 
 void swap(int * x, int * y) {
 
@@ -284,13 +289,52 @@ void selection_sort(int * array, int l, int r) {
 int array[MIN_NUM] = {3, 4, 8, 5, 9, 6, 2, 1, 7, 199};
 //int array[MIN_NUM] = {3, 4, 8, 3, 9, 6, 2, 1, 7, 5};
 
-/*
-   selection_sort(array, 0, 9);
-   insert_sort(array, 0, 9);
-   bubble_sort(array, 0, 9);
-   quick_sort(array, 0, 9);
-   shell_sort(array, 10);
-   */
+
+int test_selection_sort() {
+
+    print_array(array, MIN_NUM);
+
+    selection_sort(array, 0, 9);
+
+    print_array(array, MIN_NUM);
+}
+
+int test_insert_sort() {
+
+    print_array(array, MIN_NUM);
+
+    insert_sort(array, 0, 9);
+
+    print_array(array, MIN_NUM);
+}
+
+int test_bubble_sort() {
+
+    print_array(array, MIN_NUM);
+
+    bubble_sort(array, 0, 9);
+
+    print_array(array, MIN_NUM);
+}
+
+int test_shell_sort() {
+
+    print_array(array, MIN_NUM);
+
+    shell_sort(array, 10);
+
+    print_array(array, MIN_NUM);
+}
+
+int test_quick_sort() {
+
+    print_array(array, MIN_NUM);
+
+    quick_sort(array, 0, 9);
+
+    print_array(array, MIN_NUM);
+}
+
 int test_merge_sort() {
 
     print_array(array, MIN_NUM);
@@ -309,5 +353,11 @@ int test_heap_sort() {
     print_array(array, MIN_NUM);
 }
 
+void test_sort(void) {
+
+    test_selection_sort();
+
+    test_insert_sort();
+}
 
 

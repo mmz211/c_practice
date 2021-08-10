@@ -1,40 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "main.h"
 
+#include "single_link_list.h"
 
-//#define DESCENDING
+void print_list(SLL_NODE * list) {
 
-#define DATA_NUM 10
-
-int data[DATA_NUM];
-int next[DATA_NUM];
-
-typedef int elem_type;
-
-struct My_Node_T {
-
-    struct My_Node_T * next;
-    elem_type data;
-};
-
-typedef struct My_Node_T My_Node;
-
-
-void print_array(int * array, int size) {
-
-
-    for (int i = 0; i < size; i++) {
-
-        printf("%d\t", array[i]);
-    }
-
-    printf("\r\n");
-}
-
-void print_list(My_Node * list) {
-
-    My_Node * head = list;
+    SLL_NODE * head = list;
 
     while (head){
         printf("%d\t", head->data); 
@@ -45,12 +14,12 @@ void print_list(My_Node * list) {
 }
 
 
-My_Node * insert_in_order(My_Node * list, int value) {
+SLL_NODE * insert_in_order(SLL_NODE * list, int value) {
 
-    My_Node * curr = list;
-    My_Node * prev = curr;
+    SLL_NODE * curr = list;
+    SLL_NODE * prev = curr;
 
-    My_Node * new_node = (My_Node *)malloc(sizeof(My_Node));
+    SLL_NODE * new_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
     new_node->data = value;
     new_node->next = NULL;
 
@@ -172,14 +141,14 @@ while (curr && value < curr->data) {
     return list;
 }
 
-My_Node * insert_at_tail(My_Node * list, int value) {
+SLL_NODE * insert_at_tail(SLL_NODE * list, int value) {
 
-    My_Node * head = list;
-    My_Node * new_node = NULL;
+    SLL_NODE * head = list;
+    SLL_NODE * new_node = NULL;
 
     // if list is null
     if (head == NULL) {
-        new_node = (My_Node *)malloc(sizeof(My_Node));
+        new_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
 
         new_node->data = value;
         new_node->next = NULL;
@@ -193,7 +162,7 @@ My_Node * insert_at_tail(My_Node * list, int value) {
         head = head->next;
     }
 
-    new_node = (My_Node *)malloc(sizeof(My_Node));
+    new_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
     new_node->data = value;
     new_node->next = NULL;
 
@@ -204,11 +173,11 @@ My_Node * insert_at_tail(My_Node * list, int value) {
 
 //#define DO_WHILE
 
-My_Node * init_list_with_array(int arr[], int size) {
+SLL_NODE * init_list_with_array(int arr[], int size) {
 
-    My_Node * head = NULL;
+    SLL_NODE * head = NULL;
 
-    My_Node * curr = NULL;
+    SLL_NODE * curr = NULL;
 
     int i = 0;
 
@@ -216,7 +185,7 @@ My_Node * init_list_with_array(int arr[], int size) {
 
     do {
 
-        My_Node * node = (My_Node *)malloc(sizeof(My_Node));
+        SLL_NODE * node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
         node->data = arr[i];
         node->next = NULL;
 
@@ -238,7 +207,7 @@ My_Node * init_list_with_array(int arr[], int size) {
 
     for (; i<size; i++) {
 
-        My_Node * node = (My_Node *)malloc(sizeof(My_Node));
+        SLL_NODE * node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
         node->data = arr[i];
         node->next = NULL;
 
@@ -257,9 +226,9 @@ My_Node * init_list_with_array(int arr[], int size) {
     return head;
 }
 
-My_Node * init_with_insert_method(int arr[], int size) {
+SLL_NODE * init_with_insert_method(int arr[], int size) {
 
-    My_Node * list = NULL;
+    SLL_NODE * list = NULL;
 
     for (int i = 0; i < size; i++) {
 
@@ -270,10 +239,10 @@ My_Node * init_with_insert_method(int arr[], int size) {
     return list;
 }
 
-void release_nodelist(My_Node * list) {
+void release_nodelist(SLL_NODE * list) {
 
-    My_Node * cur = list;
-    My_Node * idx = list;
+    SLL_NODE * cur = list;
+    SLL_NODE * idx = list;
 
     while (cur) {
 
@@ -286,14 +255,14 @@ void release_nodelist(My_Node * list) {
 
 }
 
-void release_list(My_Node * list) {
+void release_list(SLL_NODE * list) {
 
-    My_Node * pre;
-    My_Node * head;
+    SLL_NODE * pre;
+    SLL_NODE * head;
 
     while (head)  {
-        head = (My_Node *) list;
-        pre = (My_Node *) list;
+        head = (SLL_NODE *) list;
+        pre = (SLL_NODE *) list;
 
         while(head->next) {
 
@@ -304,7 +273,7 @@ void release_list(My_Node * list) {
         PR("release %d", head->data);
         free(head);
         pre->next = NULL;
-        head = (My_Node *)list;
+        head = (SLL_NODE *)list;
     }
 }
 
@@ -314,7 +283,7 @@ int test_case2() {
 
     print_array(init_array_2, DATA_NUM);
 
-    My_Node * head;
+    SLL_NODE * head;
 
 #ifdef INSERT_AT_TAIL
     head = init_list_with_array(init_array_2, DATA_NUM);
@@ -347,7 +316,7 @@ int test_case1() {
 
     print_array(init_array, DATA_NUM);
 
-    My_Node * head;
+    SLL_NODE * head;
 
 #ifdef INSERT_AT_TAIL
     head = init_list_with_array(init_array, DATA_NUM);
@@ -378,6 +347,7 @@ int test_sigle_link_list() {
 
     int ret = 0;
 
+    printf("========\r\n");
     ret = test_case1();
 
     printf("========\r\n");

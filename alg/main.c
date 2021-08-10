@@ -1,12 +1,25 @@
 
 
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
 
-#include "main.h"
+#include "tools.h"
+
+#include "sort.h"
+#include "single_link_list.h"
+
 
 int main(int argc, char ** argv) {
+
+    test_sigle_link_list();
+
+    test_sort();
+
+    return 0;
+}
+
+int test(int argc, char ** argv) {
 
     time_t cur_time;
     struct tm * time_info;

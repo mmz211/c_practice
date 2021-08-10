@@ -1,7 +1,6 @@
 
-
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __TOOLS_H__
+#define __TOOLS_H__
 
 //#define DEBUG_LOG
 
@@ -24,9 +23,8 @@
 #define BLUE(msg)   COLOR(msg, 34)
 
 
-void print_array(int * array, int size); 
+extern void print_array(int * array, int size);
 
 
+#endif //__TOOLS_H__
 
-
-#endif //__MAIN_H__
