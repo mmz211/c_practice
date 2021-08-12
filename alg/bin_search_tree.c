@@ -1,7 +1,13 @@
 
 #include "bin_search_tree.h"
 
-BIN_TREE_NODE * _predecessor(BIN_TREE_NODE * root) {
+static int __visit_tree_node(BIN_TREE_NODE * node) {
+
+    // no good optioin or 
+    printf("%c ", node->data);
+}
+
+static BIN_TREE_NODE * __predecessor(BIN_TREE_NODE * root) {
 
     BIN_TREE_NODE * temp = root->left_node;
     while (temp->right_node) {
@@ -12,72 +18,74 @@ BIN_TREE_NODE * _predecessor(BIN_TREE_NODE * root) {
     return temp;
 }
 
-BIN_TREE_NODE * _get_new_node(elem_type key) {
+static BIN_TREE_NODE * __get_new_node(elem_type key) {
 
     BIN_TREE_NODE * new_node = (BIN_TREE_NODE *)malloc(sizeof(BIN_TREE_NODE));
 
     new_node->left_node = NULL;
     new_node->right_node = NULL;
-    new_node->value = key;
+    new_node->data = key;
 
     return new_node;
 }
 
-BIN_TREE_NODE * insert_node(BIN_TREE_NODE * root, elem_type key) {
+BIN_TREE_NODE * insert_tree_node(BIN_TREE_NODE * root, elem_type key) {
 
     if (root == NULL) {
     
-        return _get_new_node(key);
+        return __get_new_node(key);
     } else {
     
-        if (root->value > key) {
+        if (root->data == key) {
+            
+        } else if (root->data > key) {
         
-            insert_node(root->left_node, key);
-
+            root->left_node = insert_tree_node(root->left_node, key);
         } else {
         
-            insert_node(root->right_node, key);
+            root->right_node = insert_tree_node(root->right_node, key);
         }
     }
 
+    return root;
 }
 
-BIN_TREE_NODE * remove_node(BIN_TREE_NODE * root, elem_type key) {
+BIN_TREE_NODE * remove_tree_node(BIN_TREE_NODE * root, elem_type key) {
 
-    if (root == NULL) {
+    if (root) {
     
-        return root;
-    } else {
-    
-        if (root->value > key) {
+        if (root->data > key) {
         
-            remove_node(root->left_node, key);
-        } else if (root->value < key) {
+            root->left_node = remove_tree_node(root->left_node, key);
+        } else if (root->data < key) {
         
-            remove_node(root->right_node, key);
+            root->right_node = remove_tree_node(root->right_node, key);
         } else {
         
+            // node without children
             if (root->left_node == NULL && root->right_node == NULL) {
             
                 free(root);
                 return NULL;
             }
+            // node with 1 child
             else if (root->left_node == NULL && root->right_node == NULL) {
             
                 BIN_TREE_NODE * temp = root->left_node? root->left_node: root->right_node;
                 free(root);
                 return temp;
             }
+            // node with 2 children
             else {
-                BIN_TREE_NODE * temp = _predecessor(root);
-                root->value = temp->value;
-                root->left_node = remove_node(root->left_node, temp->value);
+                BIN_TREE_NODE * temp = __predecessor(root);
+                root->data = temp->data;
+                root->left_node = remove_tree_node(root->left_node, temp->data);
             
             }
         }
     }
 
-
+    return root;
 }
 
 void clear_tree(BIN_TREE_NODE * root) {
@@ -101,24 +109,100 @@ void clear_tree(BIN_TREE_NODE * root) {
 
 }
 
-void inorder_tranverse(BIN_TREE_NODE * root) {
+void in_order_traverse(BIN_TREE_NODE * root) {
 
-    if (root == NULL) {
-    
-        return;
-    }
+    if (root) {
 
-    if (root->left_node) {
-    
-        inorder_tranverse(root->left_node);
-    }
+        if (root->left_node) {
+        
+            in_order_traverse(root->left_node);
+        }
 
-    // no good optioin or 
-    printf("%d ", root->value);
+        __visit_tree_node(root);
 
-    if (root->right_node) {
-    
-        inorder_tranverse(root->right_node);
+        if (root->right_node) {
+        
+            in_order_traverse(root->right_node);
+        }
     }
 }
+
+void pre_order_traverse(BIN_TREE_NODE * root) {
+
+    if (root) {
+         
+        __visit_tree_node(root);
+
+        if (root->left_node) {
+        
+            pre_order_traverse(root->left_node);
+        }
+
+        if (root->right_node) {
+        
+            pre_order_traverse(root->right_node);
+        }
+    }
+    
+}
+
+void pos_order_traverse(BIN_TREE_NODE * root) {
+
+    if (root) {
+
+        if (root->left_node) {
+        
+            pos_order_traverse(root->left_node);
+        }
+
+        if (root->right_node) {
+        
+            pos_order_traverse(root->right_node);
+        }
+         
+        __visit_tree_node(root);
+    }
+    
+}
+
+void test_bin_tree_case() {
+
+    BIN_TREE_NODE * root = NULL;
+    char cmd_type = 0;
+    char cmd_para = 0;
+
+    while (scanf(" %c %c", &cmd_type, &cmd_para) == 2) {
+    
+        switch (cmd_type) {
+        
+            case '0':
+                root = insert_tree_node(root, cmd_para);
+                break;
+        
+            case '1':
+                root = remove_tree_node(root, cmd_para);
+                break;
+        
+            case '2':
+                break;
+
+            default:
+                break;
+        }
+
+        in_order_traverse(root);
+        printf("\r\n");
+    }
+
+    in_order_traverse(root);
+        printf("\r\n");
+    pre_order_traverse(root);
+        printf("\r\n");
+    pos_order_traverse(root);
+        printf("\r\n");
+
+    clear_tree(root);
+
+}
+
 

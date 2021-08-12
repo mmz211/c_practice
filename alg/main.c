@@ -7,14 +7,20 @@
 #include "tools.h"
 
 #include "sort.h"
+#include "avl_tree.h"
+#include "bin_search_tree.h"
 #include "single_link_list.h"
 
 
 int main(int argc, char ** argv) {
 
-    test_sigle_link_list();
+    test_avl_tree_case();
 
-    test_sort();
+    //test_bin_tree_case(); 
+    
+    //test_sigle_link_list();
+
+    //test_sort();
 
     return 0;
 }

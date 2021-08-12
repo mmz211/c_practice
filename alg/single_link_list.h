@@ -13,6 +13,8 @@ int next[DATA_NUM];
 
 typedef int elem_type;
 
+//#pragma pack(1)
+
 struct MY_SLL_NODE {
 
     struct MY_SLL_NODE * next;
@@ -20,16 +22,24 @@ struct MY_SLL_NODE {
 };
 
 typedef struct MY_SLL_NODE SLL_NODE;
+typedef struct MY_SLL_NODE * SLL_PTR;
 
 
-void print_array(int * array, int size); 
+extern void print_array(int * array, int size); 
 
 void print_list(SLL_NODE * list); 
 
+SLL_NODE * merge_ordered_list(SLL_NODE * first_list, SLL_NODE * second_list);
 
-SLL_NODE * insert_in_order(SLL_NODE * list, int value);
+SLL_NODE * find_node_by_key(SLL_NODE * list, elem_type key);
 
-SLL_NODE * insert_at_tail(SLL_NODE * list, int value); 
+SLL_NODE * remove_node_with_prev(SLL_NODE * list, SLL_NODE * prev, SLL_NODE * curr);
+
+SLL_NODE * remove_node(SLL_NODE * list, SLL_NODE * curr);
+
+SLL_NODE * insert_in_order(SLL_NODE * list, elem_type value);
+
+SLL_NODE * insert_at_tail(SLL_NODE * list, elem_type value); 
 
 SLL_NODE * init_list_with_array(int arr[], int size); 
 
