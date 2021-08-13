@@ -1,10 +1,13 @@
 
 #include "avl_tree.h"
 
+static const AVL_TREE_NODE NIL = {NULL, NULL, 0, 0xFFFF};
+const AVL_TREE_PTR const NIL_PTR = &NIL;
+
 static AVL_TREE_NODE * __predecessor(AVL_TREE_NODE * root) {
 
     AVL_TREE_NODE * temp = root->left_node;
-    while (temp->right_node) {
+    while (temp->right_node != NIL_PTR) {
     
         temp = temp->right_node;
     }
@@ -16,8 +19,8 @@ static AVL_TREE_NODE * __get_new_node(elem_type key) {
 
     AVL_TREE_NODE * new_node = (AVL_TREE_NODE *)malloc(sizeof(AVL_TREE_NODE));
 
-    new_node->left_node = NULL;
-    new_node->right_node = NULL;
+    new_node->left_node = NIL_PTR;
+    new_node->right_node = NIL_PTR;
     new_node->height = 1;
     new_node->data = key;
 
@@ -26,10 +29,10 @@ static AVL_TREE_NODE * __get_new_node(elem_type key) {
 
 static void __visit_tree_node(AVL_TREE_NODE * node) {
 
-    if (node) {
+    if (node != NIL_PTR) {
     // no good optioin or 
-    //        printf("%c[%d] | %c %c \r\n", node->data, node->height, node->left_node->data, node->right_node->data);
-        printf("%c[%d] \r\n", node->data, node->height);
+        printf("%c[%d] |\t %c\t %c \r\n", node->data, node->height, node->left_node->data, node->right_node->data);
+       // printf("%x[%d] \r\n", node->data, node->height);
     }
 }
 
@@ -40,15 +43,15 @@ static elem_type __max(elem_type a, elem_type b) {
 
 static void __update_height(AVL_TREE_NODE * root) {
 
-   if (root->left_node == NULL && root->right_node == NULL) {
+   if (root->left_node == NIL_PTR && root->right_node == NIL_PTR) {
        
         return; 
    } else {
    
-       if (root->left_node == NULL) {
+       if (root->left_node == NIL_PTR) {
        
            root->height = root->right_node->height + 1;
-       } else if (root->right_node == NULL) {
+       } else if (root->right_node == NIL_PTR) {
        
            root->height = root->left_node->height + 1;
        } else {
@@ -60,9 +63,9 @@ static void __update_height(AVL_TREE_NODE * root) {
 
 AVL_TREE_NODE * __left_rotate(AVL_TREE_NODE * root) {
 
-    AVL_TREE_NODE * new_root = NULL;
+    AVL_TREE_NODE * new_root = NIL_PTR;
 
-    if (root) {
+    if (root != NIL_PTR) {
     
         new_root = root->right_node;
         root->right_node = new_root->left_node;
@@ -77,9 +80,9 @@ AVL_TREE_NODE * __left_rotate(AVL_TREE_NODE * root) {
 
 AVL_TREE_NODE * __right_rotate(AVL_TREE_NODE * root) {
 
-    AVL_TREE_NODE * new_root = NULL;
+    AVL_TREE_NODE * new_root = NIL_PTR;
 
-    if (root) {
+    if (root != NIL_PTR) {
     
         new_root = root->left_node;
         root->left_node = new_root->right_node;
@@ -97,8 +100,11 @@ AVL_TREE_NODE * __maintain_balance(AVL_TREE_NODE * root) {
     int left_node_height = 0;
     int right_node_height = 0;
 
-    if (root) {
-        
+    if (root == NIL_PTR) {
+
+        return root;
+    }
+       /* 
         if (root->left_node) {
         
             left_node_height = root->left_node->height;
@@ -119,29 +125,30 @@ AVL_TREE_NODE * __maintain_balance(AVL_TREE_NODE * root) {
         
             return root;
         }
-        else {
-            // L 
-            if (root->left_node->height > root->right_node->height) {
-            
-                if (root->left_node->right_node->height > root->left_node->left_node->height) {
-                    //LR type
-                    root->left_node = __left_rotate(root->left_node);
-                }
-
-                //LL
-                root = __right_rotate(root);
-            } else {
-            // R 
-                if (root->right_node->left_node->height > root->right_node->right_node->height) {
-                
-                    //RL type
-                    root->right_node = __right_rotate(root->right_node); 
-                }
-                // RR
-                root = __left_rotate(root);
-            }
-        }
+        */
+    if (abs(root->left_node->height - root->right_node->height) < 2) {
     
+    } else {
+        // L 
+        if (root->left_node->height > root->right_node->height) {
+        
+            if (root->left_node->right_node->height > root->left_node->left_node->height) {
+                //LR type
+                root->left_node = __left_rotate(root->left_node);
+            }
+
+            //LL
+            root = __right_rotate(root);
+        } else {
+        // R 
+            if (root->right_node->left_node->height > root->right_node->right_node->height) {
+            
+                //RL type
+                root->right_node = __right_rotate(root->right_node); 
+            }
+            // RR
+            root = __left_rotate(root);
+        }
     }
 
     return root;
@@ -149,7 +156,7 @@ AVL_TREE_NODE * __maintain_balance(AVL_TREE_NODE * root) {
 
 AVL_TREE_NODE * insert_avl_tree_node(AVL_TREE_NODE * root, elem_type key) {
 
-    if (root == NULL) {
+    if (root == NIL_PTR) {
     
         return __get_new_node(key);
     } else {
@@ -172,7 +179,7 @@ AVL_TREE_NODE * insert_avl_tree_node(AVL_TREE_NODE * root, elem_type key) {
 
 AVL_TREE_NODE * remove_avl_tree_node(AVL_TREE_NODE * root, elem_type key) {
 
-    if (root) {
+    if (root != NIL_PTR) {
     
         if (root->data > key) {
         
@@ -183,15 +190,15 @@ AVL_TREE_NODE * remove_avl_tree_node(AVL_TREE_NODE * root, elem_type key) {
         } else {
         
             // node without children
-            if (root->left_node == NULL && root->right_node == NULL) {
+            if (root->left_node == NIL_PTR && root->right_node == NIL_PTR) {
             
                 free(root);
-                return NULL;
+                return NIL_PTR;
             }
             // node with 1 child
-            else if (root->left_node == NULL && root->right_node == NULL) {
+            else if (root->left_node == NIL_PTR && root->right_node == NIL_PTR) {
             
-                AVL_TREE_NODE * temp = root->left_node? root->left_node: root->right_node;
+                AVL_TREE_NODE * temp = root->left_node != NIL_PTR ? root->left_node: root->right_node;
                 free(root);
                 return temp;
             }
@@ -212,17 +219,17 @@ AVL_TREE_NODE * remove_avl_tree_node(AVL_TREE_NODE * root, elem_type key) {
 
 void clear_avl_tree(AVL_TREE_NODE * root) {
 
-    if (root == NULL) {
+    if (root == NIL_PTR) {
 
         return;
     }
 
-    if (root->left_node) {
+    if (root->left_node != NIL_PTR) {
     
         clear_avl_tree(root->left_node);
     }
 
-    if (root->right_node) {
+    if (root->right_node != NIL_PTR) {
    
         clear_avl_tree(root->right_node);
     }
@@ -233,16 +240,16 @@ void clear_avl_tree(AVL_TREE_NODE * root) {
 
 static void in_order_traverse(AVL_TREE_NODE * root) {
 
-    if (root) {
+    if (root != NIL_PTR) {
 
-        if (root->left_node) {
+        if (root->left_node != NIL_PTR) {
         
             in_order_traverse(root->left_node);
         }
 
         __visit_tree_node(root);
 
-        if (root->right_node) {
+        if (root->right_node != NIL_PTR) {
         
             in_order_traverse(root->right_node);
         }
@@ -251,16 +258,16 @@ static void in_order_traverse(AVL_TREE_NODE * root) {
 
 static void pre_order_traverse(AVL_TREE_NODE * root) {
 
-    if (root) {
+    if (root != NIL_PTR) {
          
         __visit_tree_node(root);
 
-        if (root->left_node) {
+        if (root->left_node != NIL_PTR) {
         
             pre_order_traverse(root->left_node);
         }
 
-        if (root->right_node) {
+        if (root->right_node != NIL_PTR) {
         
             pre_order_traverse(root->right_node);
         }
@@ -270,14 +277,14 @@ static void pre_order_traverse(AVL_TREE_NODE * root) {
 
 static void pos_order_traverse(AVL_TREE_NODE * root) {
 
-    if (root) {
+    if (root != NIL_PTR) {
 
-        if (root->left_node) {
+        if (root->left_node != NIL_PTR) {
         
             pos_order_traverse(root->left_node);
         }
 
-        if (root->right_node) {
+        if (root->right_node != NIL_PTR) {
         
             pos_order_traverse(root->right_node);
         }
@@ -289,9 +296,10 @@ static void pos_order_traverse(AVL_TREE_NODE * root) {
 
 void test_avl_tree_case() {
 
-    AVL_TREE_NODE * root = NULL;
+    AVL_TREE_NODE * root = NIL_PTR;
     char cmd_type = 0;
     char cmd_para = 0;
+//    NIL.data = 10;
 
     while (scanf(" %c %c", &cmd_type, &cmd_para) == 2) {
     
