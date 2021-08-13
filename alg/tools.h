@@ -2,7 +2,7 @@
 #ifndef __TOOLS_H__
 #define __TOOLS_H__
 
-//#define DEBUG_LOG
+#define DEBUG_LOG
 
 #ifdef DEBUG_LOG
     #define PR(format, ...) printf(format, ##__VA_ARGS__)

@@ -2,9 +2,11 @@
 #ifndef __AVL_TREE_H__
 #define __AVL_TREE_H__
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "tools.h"
 
 //#define elem_type   int
 
