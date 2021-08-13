@@ -78,40 +78,18 @@ static void __update_height(AVL_TREE_NODE * root) {
     
     root->height = __max(root->left_node->height, root->right_node->height) + 1;
     return;
-/*
-   if (root->left_node == NIL_PTR && root->right_node == NIL_PTR) {
-       
-        root->height = 1;
-        return; 
-   } else {
-   
-       if (root->left_node == NIL_PTR) {
-       
-           root->height = root->right_node->height + 1;
-       } else if (root->right_node == NIL_PTR) {
-       
-           root->height = root->left_node->height + 1;
-       } else {
-
-           root->height = __max(root->left_node->height, root->right_node->height) + 1;
-       }
-   }
-*/
 }
 
 AVL_TREE_NODE * __left_rotate(AVL_TREE_NODE * root) {
 
     AVL_TREE_NODE * new_root = NIL_PTR;
 
-//    if (root != NIL_PTR) {
-    
-        new_root = root->right_node;
-        root->right_node = new_root->left_node;
-        new_root->left_node = root;
+    new_root = root->right_node;
+    root->right_node = new_root->left_node;
+    new_root->left_node = root;
 
-        __update_height(root);
-        __update_height(new_root);
-//    }
+    __update_height(root);
+    __update_height(new_root);
 
     return new_root;
 }
@@ -120,15 +98,12 @@ AVL_TREE_NODE * __right_rotate(AVL_TREE_NODE * root) {
 
     AVL_TREE_NODE * new_root = NIL_PTR;
 
-//    if (root != NIL_PTR) {
-    
-        new_root = root->left_node;
-        root->left_node = new_root->right_node;
-        new_root->right_node = root;
+    new_root = root->left_node;
+    root->left_node = new_root->right_node;
+    new_root->right_node = root;
 
-        __update_height(root);
-        __update_height(new_root);
-//    }
+    __update_height(root);
+    __update_height(new_root);
 
     return new_root;
 }
@@ -363,14 +338,7 @@ void test_avl_tree_case() {
         PR("========end=============\r\n");
         printf("****\r\n");
     }
-/*
-    in_order_traverse(root);
-        printf("\r\n");
-    pre_order_traverse(root);
-        printf("\r\n");
-    pos_order_traverse(root);
-        printf("\r\n");
-*/
+
     clear_avl_tree(root);
 
 }
