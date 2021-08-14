@@ -30,7 +30,7 @@ int heap_is_full() {
 }
 
 
-int push(int val) {
+int insert(int val) {
 
     int idx = 0;
     int parent_idx = 0;
@@ -67,7 +67,7 @@ int push(int val) {
 }
 
 
-int pop() {
+int delete() {
 
     int idx = 0;
     int child_idx = 0;
@@ -117,7 +117,7 @@ int pop() {
         return 0;
 }
 
-int top() {
+int peek() {
 
     if (heap_is_null()) {
         return HEAP_IS_NULL;
@@ -139,9 +139,9 @@ int print_arr() {
 }
 
 #define MENU "\r\n"         \
-            "1: push\r\n"   \
-            "2: pop\r\n"                \
-            "3: top\r\n"                \
+            "1: insert\r\n"   \
+            "2: delete\r\n"                \
+            "3: peek\r\n"                \
             "4: get arry length\r\n"    \
             "5: print array\r\n"        \
             "others to exit\r\n"            
@@ -177,17 +177,17 @@ int test_heap() {
                     printf("input incorrect\r\n"); 
                     continue;
                 }
-                push(val);
+                insert(val);
                 print_arr();
 
                 break;
             case 2: 
-                printf("pop\r\n");
-                pop();
+                printf("delete\r\n");
+                delete();
                 print_arr();
                 break;
             case 3: 
-                printf("top %d\r\n", top());
+                printf("peek %d\r\n", peek());
 
                 break;
             case 4: 

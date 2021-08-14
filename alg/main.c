@@ -12,11 +12,14 @@
 #include "single_link_list.h"
 #include "queue.h"
 #include "queue_cycle.h"
+#include "stack.h"
 
 
 int main(int argc, char ** argv) {
 
-    test_cycle_queue();
+    test_stack();
+
+    //test_cycle_queue();
 
     //test_queue();
 

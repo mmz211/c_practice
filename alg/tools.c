@@ -24,9 +24,17 @@ void print_code_msg(int code_id) {
         case CODE_QUEUE_EMPTY:
             printf("queue is empty!\r\n");
             break;
+    
+        case CODE_STACK_FULL: 
+            printf("stack is full!\r\n");
+            break;
+    
+        case CODE_STACK_EMPTY:
+            printf("stack is empty!\r\n");
+            break;
 
         default:
-            printf("parameter incorrect!\r\n");
+            printf("unknown code type!\r\n");
             break;
     }
 }
