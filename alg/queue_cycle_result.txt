@@ -1,66 +1,36 @@
-1 0 0 
-front 0
-rear 1
-count 1
-
-****
-1 2 0 
-front 0
-rear 2
-count 2
-
-****
+0 1
+1 
+*****
+0 2
+1 2 
+*****
+0 3
 1 2 3 
-front 0
-rear 0
-count 3
-
-****
+*****
+0 4
 queue is full!
 1 2 3 
-front 0
-rear 0
-count 3
-
-****
+*****
+1 1
 dequeue 1
-1 2 3 
-front 1
-rear 0
-count 2
-
-****
-4 2 3 
-front 1
-rear 1
-count 3
-
-****
+2 3 
+*****
+0 4
+2 3 4 
+*****
+1 1
 dequeue 2
-4 2 3 
-front 2
-rear 1
-count 2
-
-****
+3 4 
+*****
+1 1
 dequeue 3
-4 2 3 
-front 0
-rear 1
-count 1
-
-****
+4 
+*****
+1 1
 dequeue 4
-4 2 3 
-front 1
-rear 1
-count 0
 
-****
+*****
+1 1
 queue is empty!
-4 2 3 
-front 1
-rear 1
-count 0
 
-****
+*****

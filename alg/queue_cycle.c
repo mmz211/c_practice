@@ -79,8 +79,8 @@ int cycle_queue_to_string(char ** q_str) {
 #define INC_STACK
 int traverse_cycle_queue(void) {
 
-    for (int i=0; i<MAX_QUEUE_SIZE; i++) {
-        printf("%d ", data_arr[i]);
+    for (int i=0; i<count; i++) {
+        printf("%d ", data_arr[(i+front)%MAX_QUEUE_SIZE]);
     }
     printf("\r\n");
 }
@@ -102,6 +102,8 @@ int test_cycle_queue(void) {
 
     while (scanf(" %c %d", &cmd_type, &cmd_para) == 2) {
     
+        printf("%c %d\r\n", cmd_type, cmd_para); 
+
         switch (cmd_type) {
         
             case '0':
@@ -135,15 +137,8 @@ int test_cycle_queue(void) {
         }
 
         traverse_cycle_queue();
-        
-        ret = cycle_queue_to_string(&buff);
-        if (ret) {
-            print_code_msg(ret);
-        }
-        puts(buff);
-        free(buff);
 
-        printf("****\r\n");
+        printf("*****\r\n");
     }
 
     ret = clear_cycle_queue();
