@@ -13,6 +13,13 @@ void print_list(SLL_NODE * list) {
     printf("\r\n"); 
 }
 
+//TODO
+
+SLL_NODE * reverse_list(SLL_NODE * first_list, SLL_NODE * second_list) {
+
+}
+
+//TODO
 SLL_NODE * merge_ordered_list(SLL_NODE * first_list, SLL_NODE * second_list) {
 
     SLL_NODE * result = NULL;
