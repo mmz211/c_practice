@@ -11,11 +11,14 @@
 #include "bin_search_tree.h"
 #include "single_link_list.h"
 #include "queue.h"
+#include "queue_cycle.h"
 
 
 int main(int argc, char ** argv) {
 
-    test_queue();
+    test_cycle_queue();
+
+    //test_queue();
 
     //test_avl_tree_case();
 
