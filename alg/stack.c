@@ -1,7 +1,7 @@
 
-
-
 #include "stack.h"
+
+stack_ptr s_ptr;
 
 elem_type data_arr[MAX_STACK_SIZE];
 
@@ -62,7 +62,18 @@ int pop(elem_type * data) {
     return CODE_OK;
 }
 
+int stack_size(void) {
+
+    return s_ptr->top - s_ptr->base;
+}
+
 int clear_stack() {
+
+    s_ptr->top = s_ptr->base;
+    s_ptr->count = 0;
+}
+
+int destroy_stack() {
 
     free(s_ptr);
     s_ptr = NULL;
@@ -181,7 +192,7 @@ int test_stack(void) {
         printf("****\r\n");
     }
 
-    ret = clear_stack();
+    ret = destroy_stack();
     if (ret) {
         print_code_msg(ret);
     }

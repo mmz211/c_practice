@@ -21,9 +21,7 @@ struct MY_STACK {
 
 typedef struct MY_STACK stack, *stack_ptr;
 
-stack_ptr s_ptr;
-
-int init_stack();
+int init_stack(void);
 
 int push(elem_type data);
 
@@ -31,7 +29,11 @@ int pop(elem_type * data);
 
 int top(elem_type * data);
 
-int clear_stack();
+int stack_size(void);
+
+int clear_stack(void);
+
+int destroy_stack(void);
 
 int traverse_stack(stack_ptr s_ptr);
 

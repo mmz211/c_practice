@@ -1,55 +1,36 @@
 
 
-#include <stdio.h>
+#include "heap.h" 
 
-#define HEAP_MAX_NODE   100
+elem_type heap_arr[MAX_HEAP_NODE];
 
-#define HEAP_IS_NULL    -1
-#define HEAP_IS_FULL    -2
+int count;
 
-#define ROOT_LARGE_HEAP 0
+int get_heap_size() {
 
-// root is 0
-int heap_arr[HEAP_MAX_NODE];
-int cnt;
-
-int get_arr_length() {
-
-    return cnt;
-
+    return count;
 }
 
-int heap_is_null() {
-    
-    return get_arr_length() <= 0;
-}
-
-int heap_is_full() {
-    
-    return get_arr_length() >= HEAP_MAX_NODE;
-}
-
-
-int insert(int val) {
+int insert(elem_type val) {
 
     int idx = 0;
     int parent_idx = 0;
     int temp = 0;
 
-    if (heap_is_full()) {
-        return HEAP_IS_FULL; 
+    if (count >= MAX_HEAP_NODE) {
+        return CODE_HEAP_FULL;
     }
 
-    heap_arr[cnt] = val;
-    cnt++;
+    heap_arr[count] = val;
+    count++;
 
-    idx = get_arr_length() - 1;
+    idx = get_heap_size() - 1;
 
     while (idx) {
 
         parent_idx = (idx-1)/2;
 
-#if ROOT_LARGE_HEAP
+#if LARGE_ROOT_HEAP
         if (heap_arr[idx] > heap_arr[parent_idx]) {
 #else
         if (heap_arr[idx] < heap_arr[parent_idx]) {
@@ -63,45 +44,48 @@ int insert(int val) {
         idx = parent_idx;
     }
 
-        return 0;
+    return CODE_OK;
 }
 
-
-int delete() {
+int delete(elem_type * data) {
 
     int idx = 0;
     int child_idx = 0;
     int temp = 0;
 
-    if (heap_is_null()) {
+    if (count <= 0) {
 
-        return HEAP_IS_NULL;
+        return CODE_HEAP_EMPTY;
     }
 
-    heap_arr[0] = heap_arr[get_arr_length() - 1];
-    cnt--;
+    *data = heap_arr[0];
+    heap_arr[0] = heap_arr[get_heap_size() - 1];
+    count--;
 
     while (1) {
 
         // left child id
         child_idx = idx * 2 + 1;
 
-        if (child_idx > get_arr_length()) {
+        if (child_idx > get_heap_size()) {
+            // no child
             break;
         }
 
-#if ROOT_LARGE_HEAP
+#if LARGE_ROOT_HEAP
         // if right child exists and larger than parent
-        if (child_idx + 1 <= get_arr_length() - 1 && heap_arr[child_idx + 1] > heap_arr[child_idx]) {
+        if (child_idx + 1 <= get_heap_size() - 1 
+                && heap_arr[child_idx + 1] > heap_arr[child_idx]) {
 #else
         // if right child exists and larger than parent
-        if (child_idx + 1 <= get_arr_length() - 1 && heap_arr[child_idx + 1] < heap_arr[child_idx]) {
+        if (child_idx + 1 <= get_heap_size() - 1 
+                && heap_arr[child_idx + 1] < heap_arr[child_idx]) {
 #endif
             // target child will be right child
             child_idx += 1;
         }
 
-#if ROOT_LARGE_HEAP
+#if LARGE_ROOT_HEAP
         if (heap_arr[idx] < heap_arr[child_idx]) {
 #else
         if (heap_arr[idx] > heap_arr[child_idx]) {
@@ -114,94 +98,97 @@ int delete() {
         idx = child_idx;    
     }
 
-        return 0;
+    return CODE_OK;
 }
 
-int peek() {
+int peek(elem_type * data) {
 
-    if (heap_is_null()) {
-        return HEAP_IS_NULL;
+    if (count <= 0) {
+        return CODE_HEAP_EMPTY;
     }
-    else {
-        return heap_arr[0];
-    }
+
+    *data = heap_arr[0];
+
+    return CODE_OK;
 }
 
-int print_arr() {
+int print_heap_arr(void) {
 
-    int arr_len = get_arr_length();
-    printf("array: \t");
+    int arr_len = get_heap_size();
+    printf("$ ");
 
     for (int i=0; i<arr_len; i++) {
-        printf("%d\t", heap_arr[i]);
+        printf("%d ", heap_arr[i]);
     }
     printf("\r\n");
 }
 
-#define MENU "\r\n"         \
-            "1: insert\r\n"   \
-            "2: delete\r\n"                \
-            "3: peek\r\n"                \
-            "4: get arry length\r\n"    \
-            "5: print array\r\n"        \
-            "others to exit\r\n"            
-
 int print_menu() {
 
-    printf("MENU\r\n");
+    printf(MENU);
 }
 
 int test_heap() {
 
-    int op;
-    int val;
+    int ret = 0;
 
     setbuf(stdout, NULL);
     setbuf(stdin, NULL);
-    
-    printf(MENU);
+//  fflush(stdin);
 
-    while (1) {
+    char * buff = NULL;
 
-        int ret = scanf("%d", &op);
-        if (ret == 0) {
-            printf("input incorrect\r\n"); 
-//            fflush(stdin);
-            continue;
-        }
+    char cmd_type = 0;
+    elem_type cmd_para = 0;
 
-        switch (op) {
-            case 1: 
-                ret = scanf("%d", &val);
-                if (ret == 0) {
-                    printf("input incorrect\r\n"); 
-                    continue;
+    while (scanf(" %c %d", &cmd_type, &cmd_para) == 2) {
+
+        printf(GREEN("%c %d\r\n"), cmd_type, cmd_para); 
+
+        switch (cmd_type) {
+
+            case '1': 
+
+                ret = insert(cmd_para);
+                if (ret) {
+                    print_code_msg(ret);
                 }
-                insert(val);
-                print_arr();
+                break;
+            case '2': 
 
+                ret = delete(&cmd_para);
+                if (ret) {
+                    print_code_msg(ret);
+                    break;
+                }
+                printf("delete %d\r\n", cmd_para);
                 break;
-            case 2: 
-                printf("delete\r\n");
-                delete();
-                print_arr();
-                break;
-            case 3: 
-                printf("peek %d\r\n", peek());
+            case '3': 
 
+                ret = peek(&cmd_para);
+                if (ret) {
+                    print_code_msg(ret);
+                    break;
+                }
+                printf("peek %d\r\n", cmd_para);
                 break;
-            case 4: 
-                printf("get_arr_length %d\r\n", get_arr_length());
+            case '4': 
+                
+                printf("get_heap_size %d\r\n", get_heap_size());
                 break;
-            case 5: 
+            case '5': 
 
-                print_arr();
+                print_heap_arr();
                 break;
+                
             default: 
-                return 1;
+
+                print_menu();
+                break;
 
         }
 
+        print_heap_arr();
     }
 
     return 0;

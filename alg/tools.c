@@ -32,6 +32,14 @@ void print_code_msg(int code_id) {
         case CODE_STACK_EMPTY:
             printf("stack is empty!\r\n");
             break;
+    
+        case CODE_HEAP_FULL: 
+            printf("heap is full!\r\n");
+            break;
+    
+        case CODE_HEAP_EMPTY:
+            printf("heap is empty!\r\n");
+            break;
 
         default:
             printf("unknown code type!\r\n");

@@ -3,6 +3,7 @@
 #define __TOOLS_H__
 
 #include <stdio.h>
+#include <stdlib.h>
 
 
 #define DEBUG_LOG
@@ -39,7 +40,10 @@ enum RETURN_CODE {
     // STACK
     CODE_STACK_FULL,
     CODE_STACK_EMPTY,
+
     // HEAP
+    CODE_HEAP_FULL,
+    CODE_HEAP_EMPTY,
 
 
     CODE_TOTAL_NUM,
