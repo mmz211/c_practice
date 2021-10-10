@@ -20,11 +20,11 @@ int main(int argc, char ** argv) {
         printf("argv[%d] = %s\n", i, argv[i]);
     }
 */
-    test_time();
+    // test_time();
 
     // test_heap();
 
-    //test_stack();
+    // test_stack();
 
     //test_cycle_queue();
 
@@ -34,7 +34,7 @@ int main(int argc, char ** argv) {
 
     //test_bin_tree_case(); 
     
-    //test_sigle_link_list();
+    test_sigle_link_list();
 
     //test_sort();
 

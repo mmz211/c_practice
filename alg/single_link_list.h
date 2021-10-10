@@ -8,6 +8,8 @@
 
 #define DATA_NUM 10
 
+#define DUMMY_DATA 0xFF
+
 int data[DATA_NUM];
 int next[DATA_NUM];
 
@@ -45,13 +47,15 @@ SLL_NODE * init_list_with_array(int arr[], int size);
 
 SLL_NODE * init_with_insert_method(int arr[], int size); 
 
+SLL_NODE * init_with_user_input(void); 
+
 void release_nodelist(SLL_NODE * list); 
 
 void release_list(SLL_NODE * list); 
 
-int test_case2(); 
+int test_case2(void); 
 
-int test_case1(); 
+int test_case1(void); 
 
-int test_sigle_link_list(); 
+int test_sigle_link_list(void); 
 

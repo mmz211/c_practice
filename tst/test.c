@@ -1,62 +1,63 @@
 
-
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "main.h"
+#include "tools.h"
 
-int main(int argc, char ** argv) {
+int a[5];
 
-    time_t cur_time;
-    struct tm * time_info;
-    char * dt;
-    
-    printf(("\033[0;1;31mtest color\033[0m\r\n"));
-    int i = 0;
-    for (i = 100; i < 100; i++)
-        printf("\r\nwhy? \r\n");     
-    printf("\r\n %d \r\n", i);     
+int* aop[5];	//指针数组
+int (*ptai)[5]; //指向数组的指针
 
-    printf("argc = %d\r\n", argc);
+int (*aof[5])(void); //函数数组
+int (*(*ptaf)[5]) (void); //指向函数数组的指针
 
-    //for (int i
-    printf("argc = %d\r\n", argc);
+int add(int a, int b) {
+    return a+b;
+}
 
-    //time_info = 
-    
-    printf("time %ld\r\n", time(&cur_time));
+int minus(int a, int b) {
+    return a-b;
+}
 
-    dt = ctime(&cur_time);
+int multiply(int a, int b) {
+    return a*b;
+}
 
-    printf("ctime %s\r\n", dt);
-    printf(GREEN("test color %s"), dt);
+typedef int (*f)(int, int);                 //declare typdef
 
-    time_info = localtime(&cur_time);
-    printf("time yday: %d\r\n", time_info->tm_yday);
-    printf("time wday: %d\r\n", time_info->tm_wday);
-    printf("time hour: %d\r\n", time_info->tm_hour);
+f func[3] = {&add, &minus, &multiply};      //make array func of type f,
 
-//    printf("asctime: %s\r\n", asctime(time_info));
+int test_aop(int argc, char ** argv) {
 
-    struct tm *gmtm = gmtime(&cur_time);
-    dt = asctime(gmtm);
-    printf("asctime: %s\r\n", dt);
-    printf("time yday: %d\r\n", time_info->tm_yday);
-    printf("time wday: %d\r\n", time_info->tm_wday);
-    printf("time hour: %d\r\n", time_info->tm_hour);
+    for (int i = 0; i < 3; ++i) printf("%d\n", func[i](5, 4));
 
-    srand(time(NULL));
+    char arr[10] = "123456789";
 
-    printf("rand %d\r\n", rand());
+    DISP(arr);
 
-    for (int i = 0; i < 10; i++) {
-        //srand((unsigned)time(NULL));
-        int a = rand();
-        printf("%d ", a);
-    }
-    printf("\r\n");
+    memset(arr, 0x31, 9);
+    //memset(arr, "1", 10);
 
-    return 0;
+    DISP(arr);
+
+    memset(arr, 0, 10);
+
+    DISP(arr);
+
+    int temp;
+    //scanf("%d", &temp);
+
+    DISP(temp);
+
+    char* s = "\u6625\u5929";
+    printf("%s\n", s); // 春天
+
+    char* ss = "春天";
+    printf("%s\n", ss);
+
+    char* sss = "春天";
+    printf("%ld\n", strlen(sss)); // 6
 }
 

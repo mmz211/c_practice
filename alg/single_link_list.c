@@ -6,7 +6,7 @@ void print_list(SLL_NODE * list) {
     SLL_NODE * head = list;
 
     while (head){
-        printf("%d\t", head->data); 
+        printf("%d ", head->data); 
         head = head->next;
     }
 
@@ -184,6 +184,15 @@ SLL_NODE * remove_node_by_key(SLL_NODE * list, elem_type key) {
     return list;
 }
 
+int insert_in_order_with_dh(SLL_NODE ** list, elem_type value) {
+
+    int ret = CODE_OK;
+
+    SLL_NODE * head = *list;
+
+
+}
+
 SLL_NODE * insert_in_order(SLL_NODE * list, elem_type value) {
 
     SLL_NODE * curr = list;
@@ -346,7 +355,6 @@ SLL_NODE * insert_at_tail(SLL_NODE * list, elem_type value) {
 SLL_NODE * init_list_with_array(int arr[], int size) {
 
     SLL_NODE * head = NULL;
-
     SLL_NODE * curr = NULL;
 
     int i = 0;
@@ -407,6 +415,54 @@ SLL_NODE * init_with_insert_method(int arr[], int size) {
     }
 
     return list;
+}
+
+int get_element(elem_type * data) {
+
+    // TODO general type
+    scanf("%d", data);
+
+    return CODE_OK;
+}
+
+int init_sll(SLL_NODE ** list) {
+
+    int ret = CODE_OK;
+
+    SLL_NODE * curr = (SLL_NODE *)malloc(sizeof(SLL_NODE));
+    if (curr == NULL) {
+
+        return CODE_API_RETURN_ERR;
+    }
+    curr->next = NULL;
+    curr->data = DUMMY_DATA;
+
+    *list = curr;
+
+    elem_type data;
+
+    for (int i=0; i < DATA_NUM; i++) {
+    
+        //scanf("%d", &data);
+
+        ret = get_element(&data);
+        if (ret) {
+            return ret;
+        }
+
+        SLL_NODE * tmp_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
+        if (tmp_node == NULL) {
+
+            return CODE_API_RETURN_ERR;
+        }
+        tmp_node->data = data;
+        tmp_node->next = NULL;
+
+        curr->next = tmp_node;
+        curr = curr->next;
+    }
+
+    return CODE_OK;
 }
 
 void release_node_list(SLL_NODE * list) {
@@ -491,6 +547,34 @@ int test_remove_node() {
 
     return 0;
 }
+
+int test_case3(void) {
+
+    int ret = CODE_OK;
+
+    SLL_NODE * head = NULL;
+
+    ret = init_sll(&head);
+
+    print_list(head->next);
+
+#ifdef INSERT_AT_TAIL 
+    head = insert_at_tail(head, 11);
+#else
+    head = insert_in_order(head, 11);
+#endif
+
+    print_list(head->next);
+
+    release_node_list(head);
+
+    head = NULL;
+
+    print_list(head);
+
+    return 0;
+}
+
 
 int test_case2() {
 
@@ -632,6 +716,8 @@ int test_sigle_link_list() {
 
     int ret = 0;
 
+    test_case3();
+/*
     printf("========\r\n");
     ret = test_case1();
 
@@ -649,7 +735,7 @@ int test_sigle_link_list() {
 
     printf("sizeof struct ptr %ld \r\n", sizeof(SLL_PTR));
     printf("sizeof int *%ld \r\n", sizeof(int *));
-    
+*/    
     /*
      * ## & #
    for (int i=0; i<2; i++) {

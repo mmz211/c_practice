@@ -6,16 +6,6 @@
 #include <stdlib.h>
 
 
-#define DEBUG_LOG
-
-#ifdef DEBUG_LOG
-    #define PR(format, ...) printf(format, ##__VA_ARGS__)
-#else
-    #define PR(format, ...) 
-#endif
-
-
-
 #define COLOR(msg, code) \
     "\033[0;" #code "m"  \
     msg                  \
@@ -25,6 +15,37 @@
 #define GREEN(msg)  COLOR(msg, 32) 
 #define YELLOW(msg) COLOR(msg, 33)
 #define BLUE(msg)   COLOR(msg, 34)
+
+
+#define COLOR_HL(msg, code) "\033[1;" #code "m" msg "\033[0m\n"
+
+#define RED_HL(msg)     COLOR_HL(msg, 31)
+#define GREEN_HL(msg)   COLOR_HL(msg, 32)
+#define YELLOW_HL(msg)  COLOR_HL(msg, 33)
+#define BLUE_HL(msg)    COLOR_HL(msg, 34)
+
+
+#define TYPE_OF_VAR(a) \
+                _Generic((a),     \
+                int : "%d",    \
+                double : "%lf",    \
+                float : "%f",    \
+                char : "%c", \
+                char *: "%s", \
+                long int : "%ld"\
+                )
+
+#define DISP(a) {    char frm[1000];    sprintf(frm, "%s = %s\r\n", #a, TYPE_OF_VAR(a));    printf(frm, a);}
+
+#define DEBUG_LOG
+
+#ifdef DEBUG_LOG
+    #define PR(format, ...) printf(format, ##__VA_ARGS__)
+#else
+    #define PR(format, ...) 
+#endif
+
+
 
 enum RETURN_CODE {
 
@@ -55,4 +76,5 @@ extern void print_array(int * array, int size);
 
 
 #endif //__TOOLS_H__
+
 
