@@ -1,0 +1,11 @@
+input how many words you want to insert
+init trie 0
+input words you want to insert
+insert successful
+word already exists
+word already exists
+input words you want to search
+word not found
+word not found
+word not found
+deinit trie 0

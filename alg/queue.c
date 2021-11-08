@@ -1,5 +1,9 @@
 
 
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "tools.h"
 #include "queue.h"
 
 elem_type data_arr[MAX_QUEUE_SIZE];

@@ -9,10 +9,13 @@
 #include "queue_cycle.h"
 #include "stack.h"
 #include "heap.h"
+#include "trie.h"
 
 extern int test_time(void);
 
 int main(int argc, char ** argv) {
+
+    test_trie();
 /*
     printf("argc = %d\r\n", argc);
 
@@ -34,7 +37,7 @@ int main(int argc, char ** argv) {
 
     //test_bin_tree_case(); 
     
-    test_sigle_link_list();
+    //test_sigle_link_list();
 
     //test_sort();
 

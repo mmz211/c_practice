@@ -1,8 +1,5 @@
 
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #define MIN_NUM 10
 
 void print_array(int * array, int size); 
