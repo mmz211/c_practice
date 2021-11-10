@@ -1,6 +1,4 @@
 
-#include "tools.h"
-
 #include "sort.h"
 #include "avl_tree.h"
 #include "bin_search_tree.h"
@@ -15,7 +13,6 @@ extern int test_time(void);
 
 int main(int argc, char ** argv) {
 
-    test_trie();
 /*
     printf("argc = %d\r\n", argc);
 
@@ -37,9 +34,11 @@ int main(int argc, char ** argv) {
 
     //test_bin_tree_case(); 
     
-    //test_sigle_link_list();
+    test_sigle_link_list();
 
     //test_sort();
+
+    //test_trie();
 
     return 0;
 }

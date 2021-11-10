@@ -1,9 +1,4 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "tools.h"
-
 //#define DESCENDING
 
 #define DATA_NUM 10
@@ -27,35 +22,28 @@ typedef struct MY_SLL_NODE SLL_NODE;
 typedef struct MY_SLL_NODE * SLL_PTR;
 
 
-extern void print_array(int * array, int size); 
+int init_sll(SLL_NODE ** list); 
+
+int deinit_sll(SLL_NODE * list); 
 
 void print_list(SLL_NODE * list); 
 
-SLL_NODE * merge_ordered_list(SLL_NODE * first_list, SLL_NODE * second_list);
+int find_node_by_key(SLL_NODE * list, elem_type key, SLL_NODE ** result); 
 
-SLL_NODE * find_node_by_key(SLL_NODE * list, elem_type key);
+int insert_in_order(SLL_NODE ** list, elem_type value);
 
-SLL_NODE * remove_node_with_prev(SLL_NODE * list, SLL_NODE * prev, SLL_NODE * curr);
+int insert_at_tail(SLL_NODE ** list, elem_type value); 
 
-SLL_NODE * remove_node(SLL_NODE * list, SLL_NODE * curr);
+int remove_node_by_prev(SLL_NODE ** list, SLL_NODE * prev, SLL_NODE * curr);
 
-SLL_NODE * insert_in_order(SLL_NODE * list, elem_type value);
+int remove_node_by_key(SLL_NODE ** list, elem_type key);
 
-SLL_NODE * insert_at_tail(SLL_NODE * list, elem_type value); 
+int remove_node(SLL_NODE ** list, SLL_NODE * target);
 
-SLL_NODE * init_list_with_array(int arr[], int size); 
+int merge_ordered_list(SLL_NODE * first_list, SLL_NODE * second_list, SLL_NODE ** result);
 
-SLL_NODE * init_with_insert_method(int arr[], int size); 
-
-SLL_NODE * init_with_user_input(void); 
-
-void release_nodelist(SLL_NODE * list); 
-
-void release_list(SLL_NODE * list); 
-
-int test_case2(void); 
-
-int test_case1(void); 
+int reverse_list(SLL_NODE ** result);
 
 int test_sigle_link_list(void); 
+
 

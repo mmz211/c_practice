@@ -118,6 +118,7 @@ int test_trie(void) {
 
     printf("input how many words you want to insert\r\n");
     scanf("%d", &words_cnt);
+    getchar();
 
     ret = init_trie();
     if (ret) {
@@ -130,7 +131,10 @@ int test_trie(void) {
     printf("input words you want to insert\r\n");
     for (int i=0; i<words_cnt; i++) {
 
-        scanf("%[a-z]s", input_buff);
+        while (scanf("%[a-z]", input_buff) != 1) {
+            getchar();
+        }
+        getchar();
 
         ret = insert_word(input_buff);
         switch (ret) {
