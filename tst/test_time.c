@@ -6,7 +6,7 @@
 
 #include "tools.h"
 
-int test_time(int argc, char ** argv) {
+static int test_time(int argc, char ** argv) {
 
     time_t cur_time;
     struct tm * time_info;

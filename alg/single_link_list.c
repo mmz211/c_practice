@@ -5,7 +5,7 @@
 #include "tools.h"
 #include "single_link_list.h"
 
-void print_list(SLL_NODE * list) {
+void traverse_sll(SLL_NODE * list) {
 
     SLL_NODE * head = list;
 
@@ -112,33 +112,22 @@ int find_node_by_key(SLL_NODE * list, elem_type key, SLL_NODE ** result) {
     }
 }
 
-int remove_node(SLL_NODE ** list, SLL_NODE * target) {
+int remove_node(SLL_NODE ** listp, SLL_NODE * target) {
 
-    SLL_NODE * curr = *list;
-    SLL_NODE * prev = curr;
+    SLL_NODE * curr = NULL;
 
-    if (curr == target) {
-
-        *list = curr->next;
-        free(curr);
-
-        return CODE_OK;
-    } else {
-
-        while (curr) {
+        while (curr = *listp) {
 
             if (curr == target) {
 
                 break;
             }
-
-            prev = curr;
-            curr = curr->next;
+            listp = &curr->next;
         }
 
         if (curr) {
 
-            prev->next = curr->next;
+            *listp = curr->next;
             free(curr);
 
             return CODE_OK;
@@ -147,136 +136,73 @@ int remove_node(SLL_NODE ** list, SLL_NODE * target) {
 
             return CODE_NODE_NOT_IN_LIST;
         }
-    }
 
 }
 
-int remove_node_by_prev(SLL_NODE ** list, SLL_NODE * prev, SLL_NODE * curr) {
+int remove_node_by_key(SLL_NODE ** listp, elem_type key) {
 
-    if (curr == *list) {
+    SLL_NODE * curr = NULL;
 
-        *list = curr->next;
+    // find node
+    while(curr = *listp) {
+
+        if (curr->data == key) {
+
+            break;
+        }
+        listp = &curr->next;
+    }
+
+    // node is found
+    if (curr) {
+        // remove
+        *listp = curr->next;
         free(curr);
 
         return CODE_OK;
     } else {
+        // node is not found, return header
 
-        prev->next = curr->next;
-        free(curr);
-
-        return CODE_OK;
-    }
-}
-
-int remove_node_by_key(SLL_NODE ** list, elem_type key) {
-
-    SLL_NODE * curr = *list;
-    SLL_NODE * prev = curr;
-
-    if (curr && curr->data == key) {
-
-        // remove the first node
-        *list = curr->next;
-        free(curr);
-
-        return CODE_OK;
-    } else {
-
-        // find node
-        while(curr) {
-
-            if (curr->data == key) {
-
-                break;
-            }
-            prev = curr; 
-            curr = curr->next;
-        }
-
-        // node is found
-        if (curr) {
-            // remove
-            prev->next = curr->next;
-            free(curr);
-
-            return CODE_OK;
-        } else {
-            // node is not found, return header
-
-            return CODE_NODE_NOT_IN_LIST;
-        }
+        return CODE_NODE_NOT_IN_LIST;
     }
 }
 
 
-int insert_in_order(SLL_NODE ** list, elem_type value) {
+int insert_in_order(SLL_NODE ** listp, elem_type value) {
 
-    SLL_NODE * curr = *list;
-    SLL_NODE * prev = curr;
+    SLL_NODE * curr = NULL;
 
     SLL_NODE * new_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
     new_node->data = value;
     new_node->next = NULL;
 
-    if (!curr) {
+    while ((curr = *listp) && curr->data < value) {
 
-        *list = new_node;
-        return CODE_OK;
+        listp = &curr->next;
     }
 
-    while (curr && value > curr->data) {
-
-        prev = curr;
-        curr = curr->next;
-    }
-
-    if (curr == NULL) {
-
-        // insert at tail
-        new_node->next = curr;
-        prev->next = new_node;
-
-        return CODE_OK;
-    }
-
-    if (curr == *list) {
-
-        // insert at head
-        new_node->next = curr;
-        *list = new_node;
-    } else {
-
-        // insert in the middle
-        new_node->next = curr;
-        prev->next = new_node;
-    }
+    new_node->next = curr;
+    *listp = new_node;
 
     return CODE_OK;
 
 }
 
-int insert_at_tail(SLL_NODE ** list, elem_type value) {
+int insert_at_tail(SLL_NODE ** listp, elem_type value) {
 
-    SLL_NODE * head = *list;
+    SLL_NODE * cur = NULL;
     SLL_NODE * new_node = NULL;
 
     new_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
     new_node->data = value;
     new_node->next = NULL;
 
-    // if list is null
-    if (head == NULL) {
-
-        *list = new_node;
-
-        return CODE_OK;
+    while (cur = *listp) {
+    
+        listp = &cur->next;
     }
 
-    while (head->next) {
-        head = head->next;
-    }
-
-    head->next = new_node;
+    *listp = new_node;
 
     return CODE_OK;
 }
@@ -338,41 +264,6 @@ int init_sll_in_order (SLL_NODE ** list) {
     return ret;
 }
 
-int init_sll(SLL_NODE ** list) {
-
-    int ret = CODE_OK;
-    SLL_NODE * curr = NULL;
-    SLL_NODE * new_node = NULL;
-    elem_type data;
-
-    while(1) {
-
-        ret = get_element(&data);
-        if (ret) {
-            return ret;
-        }
-
-        new_node = (SLL_NODE *)malloc(sizeof(SLL_NODE));
-        if (new_node == NULL) {
-
-            return CODE_API_RETURN_ERR;
-        }
-        new_node->data = data;
-        new_node->next = NULL;
-
-        if (*list == NULL) {
-            *list = new_node;
-            // RM: curr = new_node;
-        } else {
-            curr->next = new_node;
-        }
-
-        curr = new_node;
-    }
-
-    return CODE_OK;
-}
-
 int deinit_sll(SLL_NODE * list) {
 
     SLL_NODE * cur = list;
@@ -403,12 +294,12 @@ int test_init_with_insert_at_tail (void) {
     ret = init_sll_at_tail(&head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = reverse_list(&head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = deinit_sll(head);
     printf("ret = %d\r\n", ret);
@@ -427,42 +318,18 @@ int test_init_with_insert_in_order (void) {
     ret = init_sll_in_order(&head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = reverse_list(&head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = deinit_sll(head);
     printf("ret = %d\r\n", ret);
 
     return ret;
 }
-
-int test_init(void) {
-
-    int ret = CODE_OK;
-
-    SLL_NODE * head = NULL;
-
-    printf("input numbers to init a list, others to exit\r\n");
-
-    ret = init_sll(&head);
-    printf("ret = %d\r\n", ret);
-
-    print_list(head);
-
-    ret = reverse_list(&head);
-    printf("ret = %d\r\n", ret);
-
-    print_list(head);
-
-    ret = deinit_sll(head);
-    printf("ret = %d\r\n", ret);
-
-    return ret;
-} 
 
 int test_merge_list (void) {
 
@@ -477,16 +344,16 @@ int test_merge_list (void) {
 
     ret = init_sll_in_order(&first);
     printf("ret = %d\r\n", ret);
-    print_list(first);
+    traverse_sll(first);
 
     ret = init_sll_in_order(&second);
     printf("ret = %d\r\n", ret);
-    print_list(second);
+    traverse_sll(second);
 
     ret = merge_ordered_list(first, second, &head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = deinit_sll(head);
     printf("ret = %d\r\n", ret);
@@ -500,25 +367,24 @@ int test_sigle_link_list(void) {
     int ret = CODE_OK;
     elem_type data;
 
-    ret = test_merge_list();
-    return CODE_OK;
+//    ret = test_merge_list();
+//    return CODE_OK;
 
     SLL_NODE * head = NULL;
     SLL_NODE * target = NULL;
 
     printf("input numbers to init a list, others to exit\r\n");
 
-    //ret = init_sll(&head);
-    //ret = init_sll_in_order(&head);
-    ret = init_sll_at_tail(&head);
+    ret = init_sll_in_order(&head);
+    //ret = init_sll_at_tail(&head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = reverse_list(&head);
     printf("ret = %d\r\n", ret);
 
-    print_list(head);
+    traverse_sll(head);
 
     printf("input numbers to search in a list, others to exit\r\n");
     while (1) {
@@ -551,7 +417,7 @@ int test_sigle_link_list(void) {
 
     }
 
-    print_list(head);
+    traverse_sll(head);
 
     ret = deinit_sll(head);
     printf("ret = %d\r\n", ret);

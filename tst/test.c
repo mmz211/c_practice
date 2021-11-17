@@ -13,15 +13,15 @@ int (*ptai)[5]; //指向数组的指针
 int (*aof[5])(void); //函数数组
 int (*(*ptaf)[5]) (void); //指向函数数组的指针
 
-int add(int a, int b) {
+static int add(int a, int b) {
     return a+b;
 }
 
-int minus(int a, int b) {
+static int minus(int a, int b) {
     return a-b;
 }
 
-int multiply(int a, int b) {
+static int multiply(int a, int b) {
     return a*b;
 }
 
@@ -29,7 +29,7 @@ typedef int (*f)(int, int);                 //declare typdef
 
 f func[3] = {&add, &minus, &multiply};      //make array func of type f,
 
-int test_aop(int argc, char ** argv) {
+static int test_aop(int argc, char ** argv) {
 
     for (int i = 0; i < 3; ++i) printf("%d\n", func[i](5, 4));
 

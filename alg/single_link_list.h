@@ -1,13 +1,6 @@
 
 //#define DESCENDING
 
-#define DATA_NUM 10
-
-#define DUMMY_DATA 0xFF
-
-int data[DATA_NUM];
-int next[DATA_NUM];
-
 typedef int elem_type;
 
 //#pragma pack(1)
@@ -26,7 +19,7 @@ int init_sll(SLL_NODE ** list);
 
 int deinit_sll(SLL_NODE * list); 
 
-void print_list(SLL_NODE * list); 
+void traverse_sll(SLL_NODE * list); 
 
 int find_node_by_key(SLL_NODE * list, elem_type key, SLL_NODE ** result); 
 
